@@ -14,25 +14,25 @@ struct ProgressBarView: View {
     let indicatorColor: Color
     let percentage: Double
 
+    // SONDER PATCH: AWS's bordered bar replaced with a slim capsule track,
+    // vertically centered in the frame the callers give it.
     var body: some View {
         GeometryReader { proxy in
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .border(borderColor, width: 1)
-                    .cornerRadius(8, corners: .allCorners)
-                    .frame(
-                        width: proxy.size.width,
-                        height: proxy.size.height - 8
-                    )
-                    .foregroundColor(emptyColor)
+            VStack {
+                Spacer(minLength: 0)
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .frame(width: proxy.size.width, height: 6)
+                        .foregroundColor(emptyColor)
 
-                Rectangle()
-                    .cornerRadius(8, corners: .allCorners)
-                    .frame(
-                        width: min(percentage, 1) * proxy.size.width,
-                        height: proxy.size.height - 8
-                    )
-                    .foregroundColor(fillColor)
+                    Capsule()
+                        .frame(
+                            width: min(percentage, 1) * proxy.size.width,
+                            height: 6
+                        )
+                        .foregroundColor(fillColor)
+                }
+                Spacer(minLength: 0)
             }
         }
     }

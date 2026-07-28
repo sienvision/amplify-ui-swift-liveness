@@ -19,7 +19,7 @@ struct InstructionContainerView: View {
                 text: LocalizedStrings.challenge_instruction_hold_still,
                 backgroundColor: .livenessPrimaryBackground,
                 textColor: .livenessPrimaryLabel,
-                font: .title
+                font: .livenessInstruction
             )
             .onAppear {
                 UIAccessibility.post(
@@ -33,7 +33,7 @@ struct InstructionContainerView: View {
                 text: LocalizedStrings.challenge_instruction_move_face_back,
                 backgroundColor: .livenessErrorBackground,
                 textColor: .livenessErrorLabel,
-                font: .title
+                font: .livenessInstruction
             )
             .onAppear {
                 UIAccessibility.post(
@@ -47,14 +47,14 @@ struct InstructionContainerView: View {
                 text: .init(reason.localizedValue),
                 backgroundColor: .livenessPrimaryBackground,
                 textColor: .livenessPrimaryLabel,
-                font: .title
+                font: .livenessInstruction
             )
 
             ProgressBarView(
-                emptyColor: .white,
-                borderColor: .hex("#AEB3B7"),
-                fillColor: .livenessPrimaryBackground,
-                indicatorColor: .livenessPrimaryBackground,
+                emptyColor: .livenessProgressTrack,
+                borderColor: .clear,
+                fillColor: .livenessProgressFill,
+                indicatorColor: .livenessProgressFill,
                 percentage: percentage
             )
             .frame(width: 200, height: 30)
@@ -63,7 +63,7 @@ struct InstructionContainerView: View {
                 text: LocalizedStrings.challenge_instruction_move_face_closer,
                 backgroundColor: .livenessPrimaryBackground,
                 textColor: .livenessPrimaryLabel,
-                font: .title
+                font: .livenessInstruction
             )
             .onAppear {
                 UIAccessibility.post(
@@ -73,10 +73,10 @@ struct InstructionContainerView: View {
             }
 
             ProgressBarView(
-                emptyColor: .white,
-                borderColor: .hex("#AEB3B7"),
-                fillColor: .livenessPrimaryBackground,
-                indicatorColor: .livenessPrimaryBackground,
+                emptyColor: .livenessProgressTrack,
+                borderColor: .clear,
+                fillColor: .livenessProgressFill,
+                indicatorColor: .livenessProgressFill,
                 percentage: 0.2
             )
             .frame(width: 200, height: 30)
@@ -85,7 +85,7 @@ struct InstructionContainerView: View {
                 text: .init(reason.localizedValue),
                 backgroundColor: .livenessPrimaryBackground,
                 textColor: .livenessPrimaryLabel,
-                font: .title
+                font: .livenessInstruction
             )
         case .completedDisplayingFreshness:
             InstructionView(
@@ -116,7 +116,7 @@ struct InstructionContainerView: View {
                     text: LocalizedStrings.challenge_instruction_hold_still,
                     backgroundColor: .livenessPrimaryBackground,
                     textColor: .livenessPrimaryLabel,
-                    font: .title
+                    font: .livenessInstruction
                 )
             } else {
                 EmptyView()

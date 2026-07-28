@@ -14,7 +14,7 @@ struct RecordingButton: View {
                 .foregroundColor(.hex("#F92626"))
                 .frame(width: 17, height: 17)
             Text(LocalizedStrings.challenge_recording_indicator_label)
-                .font(.system(size: 12))
+                .font(.livenessChip)
                 .fontWeight(.bold)
         }
         .padding([.top, .bottom], 12)

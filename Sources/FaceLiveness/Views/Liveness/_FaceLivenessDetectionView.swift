@@ -27,7 +27,7 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
 
     var body: some View {
         ZStack {
-            Color.black
+            Color.livenessBackground  // SONDER PATCH: was Color.black
             ZStack {
                 videoView
                 VStack {

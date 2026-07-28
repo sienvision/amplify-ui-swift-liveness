@@ -21,7 +21,7 @@ struct CameraPermissionView: View {
             Spacer()
             VStack {
                 Text(LocalizedStrings.camera_permission_change_setting_header)
-                    .font(.title2)
+                    .font(.livenessInstruction)
                     .fontWeight(.medium)
                     .multilineTextAlignment(.center)
                     .padding(8)

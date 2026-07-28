@@ -14,11 +14,12 @@ struct InstructionView: View {
     var font: Font = .body
     
     var body: some View {
+        // SONDER PATCH: rounded-full pill, matching the app's chips.
         Text(text)
             .foregroundColor(textColor)
             .font(font)
-            .padding(12)
-            .background(backgroundColor)
-            .cornerRadius(8)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(Capsule().fill(backgroundColor))
     }
 }

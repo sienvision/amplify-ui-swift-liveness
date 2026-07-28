@@ -39,7 +39,7 @@ struct GetReadyPageView: View {
                     .accessibilityElement(children: .combine)
                     .opacity(challenge == Challenge.faceMovementAndLightChallenge("2.0.0") ? 1.0 : 0.0)
                     Text(LocalizedStrings.preview_center_your_face_text)
-                        .font(.title)
+                        .font(.livenessInstruction)
                         .multilineTextAlignment(.center)
                     Spacer()
                 }.padding()
@@ -68,7 +68,7 @@ struct GetReadyPageView: View {
     private var photosensitivityWarningPopoverContent: some View {
         VStack {
             Text(LocalizedStrings.get_ready_photosensitivity_dialog_title)
-                .font(.system(size: 20, weight: .medium))
+                .font(.livenessInstruction)
                 .frame(alignment: .center)
                 .padding()
             Text(LocalizedStrings.get_ready_photosensitivity_dialog_description)
