@@ -21,5 +21,6 @@ struct InstructionView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
             .background(Capsule().fill(backgroundColor))
+            .shadow(color: .black.opacity(0.18), radius: 14, x: 0, y: 4)
     }
 }

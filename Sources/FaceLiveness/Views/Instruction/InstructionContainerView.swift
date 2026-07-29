@@ -57,7 +57,8 @@ struct InstructionContainerView: View {
                 indicatorColor: .livenessProgressFill,
                 percentage: percentage
             )
-            .frame(width: 200, height: 30)
+            .frame(width: 180, height: 6)
+            .padding(.top, 12)
         case .recording(ovalDisplayed: true):
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_move_face_closer,
@@ -79,7 +80,8 @@ struct InstructionContainerView: View {
                 indicatorColor: .livenessProgressFill,
                 percentage: 0.2
             )
-            .frame(width: 200, height: 30)
+            .frame(width: 180, height: 6)
+            .padding(.top, 12)
         case .pendingFacePreparedConfirmation(let reason):
             InstructionView(
                 text: .init(reason.localizedValue),

@@ -25,37 +25,32 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
         )
     }
 
+    // SONDER PATCH: the camera fills the whole screen (center-cropped by the
+    // view controller) instead of sitting in a letterboxed 3:4 window, the
+    // REC indicator is gone, and the overlay chrome respects the safe area.
     var body: some View {
         ZStack {
-            Color.livenessBackground  // SONDER PATCH: was Color.black
-            ZStack {
-                videoView
-                VStack {
-                    HStack(alignment: .top) {
-                        if viewModel.livenessState.shouldDisplayRecordingIcon {
-                            RecordingButton()
-                                .accessibilityHidden(true)
-                        }
-
-                        Spacer()
-
-                        CloseButton(
-                            action: viewModel.closeButtonAction
-                        )
-                    }
-                    .padding()
-
-                    InstructionContainerView(
-                        viewModel: viewModel
-                    )
-
+            Color.livenessBackground
+                .edgesIgnoringSafeArea(.all)
+            videoView
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                HStack(alignment: .top) {
                     Spacer()
+
+                    CloseButton(
+                        action: viewModel.closeButtonAction
+                    )
                 }
-                .padding([.leading, .trailing])
-                .aspectRatio(3/4, contentMode: .fit)
-                .frame(maxWidth: .infinity)
+                .padding()
+
+                InstructionContainerView(
+                    viewModel: viewModel
+                )
+
+                Spacer()
             }
+            .padding([.leading, .trailing])
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }

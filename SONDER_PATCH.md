@@ -12,8 +12,10 @@ Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
 - `Views/Instruction/InstructionView.swift` — capsule pill
 - `Views/Instruction/InstructionContainerView.swift` — fonts + progress colors
 - `Views/ProgressBarView.swift` — slim capsule track
-- `Views/Liveness/_FaceLivenessDetectionView.swift` — canvas color (was black)
-- `Views/Liveness/LivenessViewController.swift` — canvas color (was black)
+- `Views/Liveness/_FaceLivenessDetectionView.swift` — canvas color, full-bleed
+  camera layout, REC indicator removed, safe-area-aware overlay
+- `Views/Liveness/LivenessViewController.swift` — canvas color; camera rect
+  scaled to COVER the screen (center-crop, still 3:4 so all geometry holds)
 - `Views/GetReadyPage/GetReadyPageView.swift`, `Views/RecordingButton.swift`,
   `Views/CameraPermission/CameraPermissionView.swift` — fonts
 - `Resources/Base.lproj/Localizable.strings` — Sonder-voice copy

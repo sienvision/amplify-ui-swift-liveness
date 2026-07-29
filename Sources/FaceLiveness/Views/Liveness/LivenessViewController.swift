@@ -70,11 +70,15 @@ final class _LivenessViewController: UIViewController {
 
     private func setupAVLayer() {
         guard previewLayer == nil else { return }
-        let x = view.frame.minX
-        let y = view.frame.minY
-        let width = view.frame.width
-        let height = width / 3 * 4
-        let cameraFrame = CGRect(x: x, y: y, width: width, height: height)
+        // SONDER PATCH: scale the 3:4 camera rect up to COVER the screen
+        // (center-crop) instead of letterboxing it. Every piece of face/oval
+        // geometry derives from this same rect, so coordinates remain
+        // self-consistent, and the streamed video is the raw camera feed
+        // either way. The aspect ratio must stay 3:4.
+        let fillScale = max(view.frame.width / 3.0, view.frame.height / 4.0)
+        let width = 3.0 * fillScale
+        let height = 4.0 * fillScale
+        let cameraFrame = CGRect(x: 0, y: 0, width: width, height: height)
 
         guard let avLayer = viewModel.configureCamera(withinFrame: cameraFrame) else {
             DispatchQueue.main.async { [weak self] in
