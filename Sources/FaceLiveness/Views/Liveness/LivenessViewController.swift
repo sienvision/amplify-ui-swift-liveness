@@ -31,7 +31,15 @@ final class _LivenessViewController: UIViewController {
         viewModel.normalizeFace = { [weak self] face in
             guard let self = self else { return face }
             return DispatchQueue.main.sync {
-                face.normalize(width: self.view.frame.width, height: self.view.frame.width / 3 * 4)
+                // SONDER PATCH: normalize into the same rect all other
+                // geometry uses (the screen-covering camera rect) instead of
+                // a hardcoded width-fit 3:4 box — with the covering camera
+                // the old math shrank faces relative to the oval and the
+                // face match could never progress.
+                face.normalize(
+                    width: self.viewModel.cameraViewRect.width,
+                    height: self.viewModel.cameraViewRect.height
+                )
             }
         }
     }
@@ -51,8 +59,12 @@ final class _LivenessViewController: UIViewController {
         setupAVLayer()
     }
 
+    // SONDER PATCH: keep the (possibly oval-recentered) camera position
+    // across layout passes.
+    private var cameraLayerPosition: CGPoint?
+
     override func viewDidLayoutSubviews() {
-        previewLayer?.position = view.center
+        previewLayer?.position = cameraLayerPosition ?? view.center
     }
 
     private func layoutSubviews() {
@@ -75,7 +87,9 @@ final class _LivenessViewController: UIViewController {
         // geometry derives from this same rect, so coordinates remain
         // self-consistent, and the streamed video is the raw camera feed
         // either way. The aspect ratio must stay 3:4.
-        let fillScale = max(view.frame.width / 3.0, view.frame.height / 4.0)
+        // The extra 12% overscan leaves slack to recenter the oval on
+        // screen (see drawOvalInCanvas) without uncovering an edge.
+        let fillScale = max(view.frame.width / 3.0, view.frame.height / 4.0) * 1.12
         let width = 3.0 * fillScale
         let height = 4.0 * fillScale
         let cameraFrame = CGRect(x: 0, y: 0, width: width, height: height)
@@ -159,6 +173,29 @@ extension _LivenessViewController: FaceLivenessViewControllerPresenter {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             guard let previewLayer = self.previewLayer else { return }
+
+            // SONDER PATCH: nudge the camera (and the oval with it) so the
+            // oval sits in the middle of the screen, limited to the slack
+            // the overscanned camera leaves before uncovering an edge. Pure
+            // display translation — matching happens in camera-rect space.
+            let layerFrame = previewLayer.frame
+            let slackX = max(0, (layerFrame.width - self.view.frame.width) / 2)
+            let slackY = max(0, (layerFrame.height - self.view.frame.height) / 2)
+            let ovalCenterInView = CGPoint(
+                x: layerFrame.minX + ovalRect.midX,
+                y: layerFrame.minY + ovalRect.midY
+            )
+            let shiftX = min(max(self.view.center.x - ovalCenterInView.x, -slackX), slackX)
+            let shiftY = min(max(self.view.center.y - ovalCenterInView.y, -slackY), slackY)
+            let position = CGPoint(
+                x: previewLayer.position.x + shiftX,
+                y: previewLayer.position.y + shiftY
+            )
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            previewLayer.position = position
+            CATransaction.commit()
+            self.cameraLayerPosition = position
 
             let ovalView = OvalView(
                 frame: previewLayer.frame,
