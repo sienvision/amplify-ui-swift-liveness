@@ -14,8 +14,9 @@ Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
 - `Views/ProgressBarView.swift` — slim capsule track
 - `Views/Liveness/_FaceLivenessDetectionView.swift` — canvas color, full-bleed
   camera layout, REC indicator removed, safe-area-aware overlay
-- `Views/Liveness/LivenessViewController.swift` — canvas color; camera rect
-  scaled to COVER the screen (center-crop, still 3:4 so all geometry holds)
+- `Views/Liveness/LivenessViewController.swift` — canvas color; camera is a
+  centered, rounded 3:4 window (~84% of screen width) so the oval reads as a
+  portrait frame; face normalization uses the shared camera rect
 - `Views/GetReadyPage/GetReadyPageView.swift`, `Views/RecordingButton.swift`,
   `Views/CameraPermission/CameraPermissionView.swift` — fonts
 - `Resources/Base.lproj/Localizable.strings` — Sonder-voice copy
