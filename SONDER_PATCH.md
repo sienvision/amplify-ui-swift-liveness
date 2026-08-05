@@ -19,6 +19,8 @@ Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
 - `Views/Liveness/LivenessViewController.swift` — canvas color; camera is a
   centered, rounded 3:4 window (~84% of screen width) so the oval reads as a
   portrait frame; face normalization uses the shared camera rect
+- `Views/OvalView.swift` — lighter outside-oval mask so the surrounding camera
+  context remains visible
 - `Views/Liveness/FaceLivenessPreviewView.swift` — public preview API that
   composes the production liveness root, camera window, oval, instructions,
   progress, close button, and freshness overlay with simulated input/state

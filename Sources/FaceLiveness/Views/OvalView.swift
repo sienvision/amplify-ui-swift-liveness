@@ -22,7 +22,9 @@ class OvalView: UIView {
         let oval = UIBezierPath(ovalIn: ovalFrame)
         mask.append(oval.reversing())
 
-        UIColor.white.withAlphaComponent(0.9).setFill()
+        // SONDER PATCH: keep the surrounding camera context visible while
+        // still guiding attention into the face oval.
+        UIColor.white.withAlphaComponent(0.65).setFill()
         mask.fill()
 
         UIColor.clear.setFill()
