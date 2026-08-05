@@ -18,7 +18,10 @@ Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
   camera layout, REC indicator removed, safe-area-aware overlay
 - `Views/Liveness/LivenessViewController.swift` — canvas color; camera is a
   centered, rounded 3:4 window (~84% of screen width) so the oval reads as a
-  portrait frame; face normalization uses the shared camera rect
+  portrait frame; face normalization uses the shared camera rect; the window
+  sits below the instruction/progress stack with deliberate spacing
+- `Utilities/LivenessLayout.swift` — shared camera offset and proportional oval
+  inset used by both the production detector and simulator preview
 - `Views/OvalView.swift` — lighter outside-oval mask so the surrounding camera
   context remains visible
 - `Views/Liveness/FaceLivenessPreviewView.swift` — public preview API that

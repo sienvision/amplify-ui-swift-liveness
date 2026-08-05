@@ -196,12 +196,12 @@ class FaceLivenessDetectionViewModel: ObservableObject {
             height: ovalParameters.boundingBox.height
         )
 
-        let normalizedOvalRect = CGRect(
+        let normalizedOvalRect = LivenessLayout.insetOval(CGRect(
             x: rect.minX * scaleRatio,
             y: rect.minY * scaleRatio,
             width: rect.width * scaleRatio,
             height: rect.height * scaleRatio
-        )
+        ))
 
         livenessViewControllerDelegate?.drawOvalInCanvas(normalizedOvalRect)
         DispatchQueue.main.async { [weak self] in

@@ -59,7 +59,7 @@ final class _LivenessViewController: UIViewController {
         setupAVLayer()
     }
 
-    // SONDER PATCH: the camera renders in a centered, rounded 3:4 window
+    // SONDER PATCH: the camera renders in a rounded 3:4 window
     // instead of covering the screen, so the oval reads as a portrait frame
     // rather than swallowing the whole page. Same-aspect scaling of the
     // upstream geometry — detection, oval, and streamed video are unchanged.
@@ -71,8 +71,16 @@ final class _LivenessViewController: UIViewController {
         return CGSize(width: width, height: width / 3 * 4)
     }
 
+    private var cameraWindowCenter: CGPoint {
+        CGPoint(
+            x: view.bounds.midX,
+            y: view.bounds.midY + LivenessLayout.cameraVerticalOffset
+        )
+    }
+
     override func viewDidLayoutSubviews() {
-        previewLayer?.position = view.center
+        previewLayer?.position = cameraWindowCenter
+        ovalView?.center = cameraWindowCenter
     }
 
     private func layoutSubviews() {
@@ -106,7 +114,7 @@ final class _LivenessViewController: UIViewController {
             return
         }
 
-        avLayer.position = view.center
+        avLayer.position = cameraWindowCenter
         avLayer.cornerRadius = 24
         avLayer.masksToBounds = true
         self.previewLayer = avLayer

@@ -8,8 +8,10 @@
 import SwiftUI
 
 extension Font {
-    /// Instruction pill / headline text.
+    /// Headline text outside the live camera flow.
     static let livenessInstruction = Font.custom("Nunito-ExtraBold", size: 20)
+    /// Compact instruction text shown above the camera window.
+    static let livenessInstructionPill = Font.custom("Nunito-ExtraBold", size: 17)
     /// Secondary / body copy.
     static let livenessBody = Font.custom("Nunito-Bold", size: 15)
     /// Small chips (REC indicator).

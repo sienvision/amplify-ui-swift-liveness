@@ -177,12 +177,12 @@ private struct FaceLivenessPreviewCameraView: UIViewControllerRepresentable {
         if !controller.ovalExists, state != .camera {
             let size = previewLayer.bounds.size
             controller.drawOvalInCanvas(
-                CGRect(
+                LivenessLayout.insetOval(CGRect(
                     x: oval.minX * size.width,
                     y: oval.minY * size.height,
                     width: oval.width * size.width,
                     height: oval.height * size.height
-                )
+                ))
             )
         }
 
