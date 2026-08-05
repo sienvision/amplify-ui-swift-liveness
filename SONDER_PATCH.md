@@ -2,7 +2,9 @@
 
 This fork restyles the liveness UI chrome as Sonder while leaving the
 check itself — streaming/session logic, oval geometry, face detection,
-and the flash (freshness) sequence — byte-identical to upstream.
+and the flash (freshness) sequence — byte-identical to upstream. It also
+exposes a simulator-safe preview that renders the production UI components
+without opening a camera or starting a liveness session.
 
 Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
 
@@ -17,6 +19,9 @@ Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
 - `Views/Liveness/LivenessViewController.swift` — canvas color; camera is a
   centered, rounded 3:4 window (~84% of screen width) so the oval reads as a
   portrait frame; face normalization uses the shared camera rect
+- `Views/Liveness/FaceLivenessPreviewView.swift` — public preview API that
+  composes the production liveness root, camera window, oval, instructions,
+  progress, close button, and freshness overlay with simulated input/state
 - `Views/GetReadyPage/GetReadyPageView.swift`, `Views/RecordingButton.swift`,
   `Views/CameraPermission/CameraPermissionView.swift` — fonts
 - `Resources/Base.lproj/Localizable.strings` — Sonder-voice copy
@@ -35,3 +40,11 @@ Patched (all hunks marked `SONDER PATCH` / `SONDER ADDITION`):
    re-tag as `<new-tag>-sonder.1`, push branch + tag.
 3. Bump the pinned tag in sonder's FaceLivenessDetector.podspec,
    rebuild, and run a real device check before shipping.
+
+## Production UI preview
+
+`FaceLivenessPreviewView` is intended for Sonder's internal verification UI.
+It mounts the same visible view hierarchy as `FaceLivenessDetectorView`, but
+replaces the capture session with a still image or gradient and lets the caller
+select a `FaceLivenessPreviewState`. Changes to production liveness chrome are
+therefore reflected in the simulator preview without maintaining a second UI.
