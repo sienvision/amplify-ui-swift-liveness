@@ -94,7 +94,9 @@ struct InstructionContainerView: View {
         case .completedDisplayingFreshness:
             InstructionView(
                 text: LocalizedStrings.challenge_verifying,
-                backgroundColor: .livenessBackground
+                backgroundColor: .livenessPrimaryBackground,
+                textColor: .livenessPrimaryLabel,
+                font: .livenessInstructionPill
             )
             .onAppear {
                 UIAccessibility.post(
@@ -105,7 +107,9 @@ struct InstructionContainerView: View {
         case .completedNoLightCheck:
             InstructionView(
                 text: LocalizedStrings.challenge_verifying,
-                backgroundColor: .livenessBackground
+                backgroundColor: .livenessPrimaryBackground,
+                textColor: .livenessPrimaryLabel,
+                font: .livenessInstructionPill
             )
             .onAppear {
                 UIAccessibility.post(

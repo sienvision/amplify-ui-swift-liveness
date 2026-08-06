@@ -192,6 +192,10 @@ private struct FaceLivenessPreviewCameraView: UIViewControllerRepresentable {
         } else {
             controller.freshnessView.clearColors()
         }
+
+        if state == .verifying {
+            controller.displayVerificationPlaceholder()
+        }
     }
 }
 

@@ -81,6 +81,54 @@ final class _LivenessViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         previewLayer?.position = cameraWindowCenter
         ovalView?.center = cameraWindowCenter
+        view.viewWithTag(Self.verificationPlaceholderTag)?.frame = cameraWindowFrame
+    }
+
+    private static let verificationPlaceholderTag = 8_141
+
+    private var cameraWindowFrame: CGRect {
+        let size = cameraWindowSize
+        return CGRect(
+            x: cameraWindowCenter.x - size.width / 2,
+            y: cameraWindowCenter.y - size.height / 2,
+            width: size.width,
+            height: size.height
+        )
+    }
+
+    // SONDER PATCH: once capture is complete, cover the frozen selfie with a
+    // neutral loading state while the recorded video finishes uploading.
+    func displayVerificationPlaceholder() {
+        guard view.viewWithTag(Self.verificationPlaceholderTag) == nil else { return }
+
+        let placeholder = UIView(frame: cameraWindowFrame)
+        placeholder.tag = Self.verificationPlaceholderTag
+        placeholder.backgroundColor = UIColor(
+            red: 243 / 255,
+            green: 243 / 255,
+            blue: 243 / 255,
+            alpha: 1
+        )
+        placeholder.layer.cornerRadius = 24
+        placeholder.layer.masksToBounds = true
+
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = UIColor(
+            red: 169 / 255,
+            green: 169 / 255,
+            blue: 169 / 255,
+            alpha: 1
+        )
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        placeholder.addSubview(spinner)
+
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: placeholder.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: placeholder.centerYAnchor)
+        ])
+
+        view.addSubview(placeholder)
     }
 
     private func layoutSubviews() {
@@ -148,13 +196,11 @@ final class _LivenessViewController: UIViewController {
 }
 
 extension _LivenessViewController: FaceLivenessViewControllerPresenter {
-    func displaySingleFrame(uiImage: UIImage) {
+    func displaySingleFrame(uiImage _: UIImage) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             guard let previewLayer = self.previewLayer else { return }
-            let imageView = UIImageView(image: uiImage)
-            imageView.frame = previewLayer.frame
-            self.view.addSubview(imageView)
+            self.displayVerificationPlaceholder()
             (previewLayer as? AVCaptureVideoPreviewLayer)?.session = nil
             previewLayer.removeFromSuperlayer()
             self.viewModel.stopRecording()
