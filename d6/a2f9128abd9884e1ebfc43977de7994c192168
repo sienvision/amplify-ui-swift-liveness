@@ -1,0 +1,22 @@
+Package.swift
+  s_8ee260e1ec5ae6::t_d189adb64dc64d 9-14
+  s_8ee260e1ec5ae6::t_5ec967f26d9c28 21-29
+Package.resolved
+  s_8ee260e1ec5ae6::t_e202462ac89d41 8-9,44-45,53-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "d6a2f9128abd9884e1ebfc43977de7994c192168",
+  "prompts": {},
+  "sessions": {
+    "s_8ee260e1ec5ae6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3b7257c-1c24-4ffd-96dd-021b14e725b1",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Lenard Pratt <l3np27@gmail.com>"
+    }
+  }
+}
